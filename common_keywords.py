@@ -10,11 +10,11 @@ from nltk.corpus import stopwords
 nltk.download('stopwords')
 
 
-# access html from Bloomberg
-#search = input("search for: ")
+
 print("This program returns a graph of the most common 50 words found in your Indeed Job Search")
 
 search = input('Search for: ')
+print(search)
 city = input('City: ')
 state = input('State (eg. WI): ')
 keyword = '' #input('Keyword: ')
@@ -38,11 +38,12 @@ def get_links(URL):
 
     for job_elem in job_elems:
         url_elem = job_elem.find('a',href = True)
-        #print("https://www.indeed.com"+url_elem['href'])
+
         urls.append("https://www.indeed.com"+url_elem['href'])
-    #print(urls)
+
     if urls:
         return urls
+
 def get_nextPage(URL):
     page = requests.get(URL)
     src = page.content
@@ -50,11 +51,10 @@ def get_nextPage(URL):
     pagination_box = soup.find('ul', class_='pagination-list')
     current_page = pagination_box.find('b').text
     next_pageString = str(int(current_page)+1)
-    print(next_pageString)
     next_page = pagination_box.find(string = next_pageString)
     parent_elem = next_page.parent.parent.parent
     next_urlElem = parent_elem.find('a', href=True)
-    #print(next_urlElem['href'])
+
     next_url = 'https://www.indeed.com'+next_urlElem['href']
     return next_url
 
@@ -82,21 +82,15 @@ def countWords(jobDescription_list):
         if word not in uniqueWords:
             if word not in stop_words:
                 uniqueWords.append(word.lower())
-    #print(uniqueWords)
-    #print(jobDescription_list)
+
+
     wordObj_list = []
     for item in uniqueWords:
         count = jobDescription_list.count(item)
         wordObj = item
-        #print(count, wordObj.word)
+
         wordObj_list.append(wordObj)
     return wordObj_list
-    #descriptions = page_results.find_all(string=lambda text: keyword in text.lower())
-    #if descriptions:
-        #print (job_title.text)
-        #print (job_company.text)
-        #print (url)
-        #print ("\n")
 
 completeWordList = []
 for i in [0,5]:
@@ -104,7 +98,6 @@ for i in [0,5]:
     for url in url_list:
         jobDescript = find_jobDescriptionList(url, keyword)
         completeWordList = completeWordList + countWords(jobDescript)
-    #input_url = get_nextPage(input_url)
     i = i+1
 
 counts_completeWord = collections.Counter(completeWordList)

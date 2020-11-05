@@ -4,6 +4,6 @@ This program returns a bar graph of the top 50 keywords found in a given Indeed.
 ## Dependencies
 
 * BeautifulSoup
-* pyplot
+* matplotlib
 * pandas
 * nltk
