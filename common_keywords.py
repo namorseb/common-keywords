@@ -24,6 +24,8 @@ url_city = city.replace(" ", "%20")
 url_state = state.strip()
 input_url = 'https://www.indeed.com/jobs?q='+url_search+'&l='+url_city+'%2C%20'+url_state+'&vjk=150155c58c26df23&advn=8935830343702940'
 
+# This part of the program was for an earlier version that showed
+# the search results in the form of a job title, description, and url
 
 def get_links(URL):
     page = requests.get(URL)
@@ -73,6 +75,8 @@ def find_jobDescriptionList(url, keyword):
     jobDescriptionText = soup_fn.find(id = 'jobDescriptionText').text
     jobDescription_list = jobDescriptionText.lower().split()
     return jobDescription_list
+
+# Below is the code for the counting keywords function of the program
 
 def countWords(jobDescription_list):
     uniqueWords = []
